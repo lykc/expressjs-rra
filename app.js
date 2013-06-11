@@ -12,6 +12,8 @@ var rra = require('./routes/rra');
 var app = express();
 
 // all environments
+app.use(express.cookieParser('your secret here'));
+app.use(express.session());
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
@@ -27,7 +29,11 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', rra.home)
+app.get('/', rra.home);
+app.post('/', rra.home_post_handler);
+app.get('/restaurants', rra.restaurants);
+app.get('/restaurants/:id', rra.restaurant)
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

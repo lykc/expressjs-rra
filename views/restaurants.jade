@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    include user
+      
+    -for (var id in restaurants)
+      - var restaurant = restaurants[id]
+      div
+        a(href='/restaurants/#{id}') #{restaurants.name} - $#{restaurants.rating}
