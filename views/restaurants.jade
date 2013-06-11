@@ -3,7 +3,6 @@ extends layout
 block content
     include user
       
-    -for (var id in restaurants)
-      - var restaurant = restaurants[id]
+    - each restaurant, id in restaurants
       div
-        a(href='/restaurants/#{id}') #{restaurants.name} - $#{restaurants.rating}
+        a(href='/restaurants/#{id}') #{restaurant.name} - #{restaurant.rating} out of 10

@@ -21,16 +21,18 @@ exports.home_post_handler = function(req, res) {
 
 //handler for displaying each restauarant
 exports.restaurants = function(req, res) {
-	if(typeof req.session.username == 'undefined') res.redirect('/');
-	else res.render('restaurants', {title: 'Restaurants', username: req.session.username, restaurants:restaurants});
+	if (typeof req.session.username == 'undefined') {
+		res.redirect('/');
+	} else {
+		res.render('restaurants', {title: 'Restaurants', username: req.session.username, restaurants:restaurants});
+	}
 };
 
 //handler for displaying individual restaurants
 exports.restaurant = function(req, res) {
-	if(typeof req.session.username == 'undefined') res.redirect('/');
-	else {
-		var name = restaurants[req.params.id].name;
-		var rating = restaurants[req.params.id].price;
-		res.render('restaurant', {title: 'restaurant details - ' + name, username: req.session.username, name:name, rating:rating});
+	if (typeof req.session.username == 'undefined') {
+		res.redirect('/');
+	} else {
+		res.render('restaurant', {restaurants: restaurants});
 	}
 };
