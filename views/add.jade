@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	include user
+	h1= title
+	p Add new restaurant
+
+	form(method='post')
+		div
+			
+			label(for='restaurant') Restaurant
+			input(type='text', name='restuarant')
+			
+			label(for='rating') Rate out of 5
+			select(name="rating")
+				- for (var rating = 1; rating <= 5; rating++) {
+					option(value="#{rating}") #{rating}
+				- }
+			
+			input(type='submit', value='Add new restaurant and rating')
+
+				

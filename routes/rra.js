@@ -38,4 +38,11 @@ exports.restaurant = function(req, res) {
     res.render('restaurant', { name:name, rating:rating });
 };
 
-
+//handler for adding new one
+exports.addNew = function(req, res) {
+	if (typeof req.session.username == 'undefined') {
+		res.redirect('/');
+	} else {
+		res.render('add');
+	}
+};

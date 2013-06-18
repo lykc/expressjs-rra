@@ -31,6 +31,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', rra.home);
 app.post('/', rra.home_post_handler);
+app.get('/add', rra.addNew);
 app.get('/restaurants', rra.restaurants);
 app.get('/restaurants/:id', rra.restaurant);
 app.get('/logout', function(req,res){
