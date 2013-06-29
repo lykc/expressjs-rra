@@ -3,5 +3,84 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    
   body
     block content
+
+    script(type='text/template.', id='user-list-template')
+        a(href='#/new') New User
+
+        table
+            tr
+                th first name
+                th last name
+                th age
+                th
+            <% _.each(users, function(user){ %>
+            tr
+                td <%= user.get('firstname') %>
+                td <%= user.get('lastname') %>
+                td <%= user.get('age') %>
+                td
+            <% }); %>
+
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js')
+    script
+        
+        $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+          options.url = 'http://backbonejs-beginner.herokuapp.com' + options.url;
+        });
+
+        //backbone COLLECTIONS
+        var Users = Backbone.Collection.extend({
+            url: '/users'
+        });
+
+        //backbone VIEWS
+        var UserList = Backbone.View.extend({
+            el: '.page',
+            render: function(){
+                var me = this;
+                var users = new Users();
+                users.fetch({
+                    success: function(){
+                        var template = _.template($('#user-list-template').html(), {users: users.models});
+                        me.$el.html(template);
+                    }
+                })
+               
+            }
+        });
+
+        var EditUser = Backbone.View.extend({
+            el: '.page',
+            render: function(){
+                this.$el.html('form here')
+            }
+        });
+
+
+        //backbone ROUTES
+        var Router = Backbone.Router.extend({
+            routes: {
+                '': 'home',
+                'new': 'edituser'
+            }
+        });
+
+        // create new instances
+        var userlist = new UserList();
+        var router = new Router();
+        var edituser = new EditUser();
+
+        //jquery 
+        router.on('route:home', function(){
+            userlist.render();
+        });
+        router.on('route:edituser', function(){
+            edituser.render();
+        });
+        
+        Backbone.history.start();
